@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<!-- HEAD LOADING -->
+
+<head>
+    <meta charset="UTF-8">
+    <title>WebRTC Client</title>
+    <link rel="stylesheet" type="text/css" href="index.css">
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
+</head>
+
+<!-- BODY LOADING -->
+
+<body>
+    <div class="split left">
+        <video id="localVideo" autoplay hidden></video>
+    </div>
+    <div class="split right">
+        <video id="remoteVideo" autoplay hidden></video>
+    </div>
+    <div class="button_array">
+        <input type="text" id="username" placeholder="Your username.">
+        <button id="startButton">Start</button>
+        <button id="stopButton" disabled>Stop</button>
+        <button id="callButton" disabled>Call</button>
+        <button id="hangupButton" disabled>Hangup</button>
+        <input type="text" id="nameToCall" placeholder="Username to call." disabled>
+        <input type="text" id="callerName" placeholder="Person's username who are calling you" disabled>
+        <button id="acceptCall" disabled>Accept</button>
+        <button id="denyCall" disabled>Deny</button>
+    </div>
+</body>
+
+<!-- SCRIPTS LOADING -->
+
+<script src="node_modules/socket.io-client/dist/socket.io.js"></script>
+<script src="socket.js"></script>
+<script src="index.js"></script>
+
+
+</html>

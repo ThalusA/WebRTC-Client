@@ -1,0 +1,13 @@
+{
+  "name": "WebRTC_Client",
+  "version": "1.0.0",
+  "main": "main.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron ."
+  },
+  "dependencies": {
+    "electron": "^7.1.7",
+    "socket.io-client": "^2.3.0"
+  }
+}
