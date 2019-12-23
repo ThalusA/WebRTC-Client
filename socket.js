@@ -16,9 +16,9 @@ socket.on('called', (data) => {
 socket.on('call info', (data) => {
     console.log(data);
     peerConnection.setRemoteDescription(data.streamInfo);
-    for (let candidate in data.candidates) {
+    data.candidates.forEach((candidate) => {
         peerConnection.addIceCandidate(candidate);
-    }
+    });
 });
 
 socket.on('ice receive', (data) => {
