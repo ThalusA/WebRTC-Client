@@ -1,5 +1,6 @@
 const mediaStreamConstraints = { video: true, audio: true };
-const offerOptions = { offerToReceiveVideo: 1 };
+const offerOptions = { offerToReceiveVideo: true, offerToReceiveAudio: true, voiceActivityDetection: true };
+const answerOptions = null;
 let startTime = null;
 
 const localVideo = document.getElementById('localVideo');

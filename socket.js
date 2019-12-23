@@ -14,7 +14,16 @@ socket.on('called', (data) => {
 });
 
 socket.on('call info', (data) => {
-    console.log(data);
+    peerConnection.setRemoteDescription(data.streamInfo)
+        .then(() => peerConnection.createAnswer(answerOptions))
+        .then(peerConnection.setLocalDescription)
+        .then(() => socket.emit('call answer', { caller: username.value, responder: nameToCall.value, streamInfo: peerConnection.localDescription }));
+    data.candidates.forEach((candidate) => {
+        peerConnection.addIceCandidate(candidate);
+    });
+});
+
+socket.on('call answer', (data) => {
     peerConnection.setRemoteDescription(data.streamInfo);
     data.candidates.forEach((candidate) => {
         peerConnection.addIceCandidate(candidate);
