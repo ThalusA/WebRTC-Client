@@ -1,4 +1,4 @@
-const socket = io("http://172.30.42.158:8088");
+const socket = io('http://172.30.42.150:8088');
 let connected = false;
 
 socket.on('connect', () => {
