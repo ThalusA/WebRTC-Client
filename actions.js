@@ -28,7 +28,7 @@ function startAction() {
     navigator.getUserMedia(mediaStreamConstraints, (mediaStream) => {
         trace('Setting up media devices');
         setupMediaDevice(mediaStream);
-        peerConnection.ontrack = handleTrack;
+        peerConnection.onaddstream = handleStream;
         peerConnection.onicecandidate = handleConnection;
         setupStates(true, false, false, true, false, true);
         localVideo.hidden = false;
@@ -79,7 +79,7 @@ function stopAction() {
 }
 
 function acceptAction() {
-    socket.emit('call accept', { caller: callerName.value, responder: username.value, streamInfo: peerConnection.localDescription });
+    socket.emit('call accept', { caller: callerName.value, responder: username.value, streamInfo: peerConnection.localDescription.toJSON() });
     callerName.value = '';
     acceptCallButton.disabled = true;
     denyCallButton.disabled = true;

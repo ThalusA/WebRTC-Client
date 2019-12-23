@@ -19,7 +19,7 @@ socket.on('call info', (data) => {
         .then(() => peerConnection.createAnswer(answerOptions))
         .then(peerConnection.setLocalDescription)
         .then(() => {
-            socket.emit('call answer', { caller: username.value, responder: nameToCall.value, streamInfo: peerConnection.localDescription });
+            socket.emit('call answer', { caller: username.value, responder: nameToCall.value, streamInfo: peerConnection.localDescription.toJSON() });
             data.candidates.forEach(candidate => peerConnection.addIceCandidate(candidate));
         });
 });

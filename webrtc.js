@@ -45,12 +45,9 @@ function createdOffer(description) {
         .catch(setSessionDescriptionError);
 }
 
-function handleTrack(track) {
-    if (!remoteVideo.srcObject) {
-        trace('Remote peer connection received remote stream.');
-        remoteVideo.srcObject = track.streams[0];
-        remoteStream = track.streams[0];
-    }
+function handleStream(event) {
+    remoteVideo.srcObject = event.stream;
+    remoteStream = event.stream;
 }
 
 // Logs answer to offer creation and sets peer connection session descriptions.
