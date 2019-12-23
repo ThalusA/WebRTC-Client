@@ -24,10 +24,11 @@ function setupMediaDevice(mediaStream) {
 // Define RTC peer connection behavior.
 
 // Connects with new peer candidate.
-function handleConnection({candidate}) {
-    if (candidate) {
-        trace(`ICE Canditate Update : ${canditate.toString()}`);
-        socket.emit('ice update', { username: username.value , candidate: candidate });
+function handleConnection(desc) {
+    if (desc && desc.candidate && desc.candidate.candidate) {
+        console.log(desc.candidate.candidate);
+        trace(`ICE Canditate Update : ${desc.candidate.candidate}`);
+        socket.emit('ice update', { username: username.value , candidate: desc.candidate.candidate });
     }
 }
 
