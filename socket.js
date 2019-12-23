@@ -18,18 +18,16 @@ socket.on('call info', (data) => {
     peerConnection.setRemoteDescription(data.streamInfo)
         .then(() => peerConnection.createAnswer(answerOptions))
         .then(peerConnection.setLocalDescription)
-        .then(() => socket.emit('call answer', { caller: username.value, responder: nameToCall.value, streamInfo: peerConnection.localDescription }));
-    data.candidates.forEach((candidate) => {
-        peerConnection.addIceCandidate(candidate);
-    });
+        .then(() => {
+            socket.emit('call answer', { caller: username.value, responder: nameToCall.value, streamInfo: peerConnection.localDescription });
+            data.candidates.forEach(candidate => peerConnection.addIceCandidate(candidate));
+        });
 });
 
 socket.on('call answer', (data) => {
     console.log(data);
-    peerConnection.setRemoteDescription(data.streamInfo);
-    data.candidates.forEach((candidate) => {
-        peerConnection.addIceCandidate(candidate);
-    });
+    peerConnection.setRemoteDescription(data.streamInfo)
+        .then(() => data.candidates.forEach(candidate => peerConnection.addIceCandidate(candidate)));
 });
 
 socket.on('ice receive', (data) => {
