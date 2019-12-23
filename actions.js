@@ -79,13 +79,14 @@ function stopAction() {
 }
 
 function acceptAction() {
-    getAnswer(lastCallStreamData);
+    socket.emit('call accept', { caller: callerName.value, responder: username.value });
     callerName.value = '';
     acceptCallButton.disabled = true;
     denyCallButton.disabled = true;
 }
 
 function denyAction() {
+    socket.emit('call deny', { caller: callerName.value, responder: username.value });
     lastCallStreamData = null;
     callerName.value = '';
     acceptCallButton.disabled = true;

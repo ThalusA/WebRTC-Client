@@ -25,8 +25,10 @@ function setupMediaDevice(mediaStream) {
 
 // Connects with new peer candidate.
 function handleConnection({candidate}) {
-    trace(`ICE Canditate Update : ${canditate.toString()}`);
-    socket.emit('ice update', { username: username.value , candidate: candidate });
+    if (candidate) {
+        trace(`ICE Canditate Update : ${canditate.toString()}`);
+        socket.emit('ice update', { username: username.value , candidate: candidate });
+    }
 }
 
 // Logs error when setting session description fails.
