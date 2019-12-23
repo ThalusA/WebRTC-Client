@@ -28,6 +28,8 @@ function startAction() {
     navigator.getUserMedia(mediaStreamConstraints, (mediaStream) => {
         trace('Setting up media devices');
         setupMediaDevice(mediaStream);
+        peerConnection.onsignalingstatechange = handleSignalingState;
+        peerConnection.onnegotiationneeded = handleNegotiation;
         peerConnection.onaddstream = handleStream;
         peerConnection.onicecandidate = handleConnection;
         setupStates(true, false, false, true, false, true);

@@ -41,6 +41,14 @@ function setupMediaDevice(mediaStream) {
 
 // Define RTC peer connection behavior.
 
+function handleNegotiation() {
+    trace('Negotiation Needed');
+}
+
+function handleSignalingState() {
+    trace(peerConnection.signalingState);
+}
+
 // Connects with new peer candidate.
 function handleConnection(desc) {
     if (desc && desc.candidate && desc.candidate.candidate) {

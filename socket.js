@@ -15,19 +15,22 @@ socket.on('called', (data) => {
 
 socket.on('call info', (data) => {
     console.log(data);
-    peerConnection.setRemoteDescription(data.streamInfo)
+    peerConnection.setRemoteDescription(data.streamInfo) // WHERE IT CRASH
         .then(() => peerConnection.createAnswer(answerOptions))
         .then(peerConnection.setLocalDescription)
         .then(() => {
             socket.emit('call answer', { caller: username.value, responder: nameToCall.value, streamInfo: peerConnection.localDescription.toJSON() });
             data.candidates.forEach(candidate => peerConnection.addIceCandidate(candidate));
-        });
+        })
+        .catch(err => console.log(err));
 });
 
 socket.on('call answer', (data) => {
     console.log(data);
     peerConnection.setRemoteDescription(data.streamInfo)
-        .then(() => data.candidates.forEach(candidate => peerConnection.addIceCandidate(candidate)));
+        .then(() => data.candidates.forEach(candidate => peerConnection.addIceCandidate(candidate)))
+        .catch(err => console.log(err));
+
 });
 
 socket.on('ice receive', (data) => {
