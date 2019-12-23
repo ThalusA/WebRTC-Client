@@ -57,28 +57,22 @@ function callAction() {
 
 // Handles hangup action: ends up call, closes connections and resets peers.
 function hangupAction() {
-    if (localPeerConnection)
-        localPeerConnection.close();
-    if (remotePeerConnection)
-        remotePeerConnection.close();
     setupStates(true, false, false, true, false);
+    socket.emit('hangup', { username: username.value });
     remoteVideo.hidden = true;
     nameToCall.value = '';
-    localPeerConnection = null;
-    remotePeerConnection = null;
     trace('Ending call.');
 }
 
 function stopAction() {
-    if (localPeerConnection || remotePeerConnection)
-        hangupAction();
     setupStates(false, true, true, true, true, false);
     localStream.getTracks().forEach((track) => {
         track.stop();
     });
     localStream = null;
-    localVideo.srcObject = localStream;
+    localVideo.srcObject = null;
     nameToCall.value = '';
+    remoteVideo.hidden = true;
     localVideo.hidden = true;
     socket.emit('unregister', { username: username.value });
     trace('Stopping service.');

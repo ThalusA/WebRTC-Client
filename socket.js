@@ -1,4 +1,5 @@
-const socket = io('http://172.30.42.150:8088');
+const addr = 'http://172.30.42.150:8088';
+const socket = io(addr);
 let connected = false;
 
 socket.on('connect', () => {
@@ -8,9 +9,33 @@ socket.on('connect', () => {
 
 socket.on('called', (data) => {
     callerName.value = data.username;
-    lastCallStreamData = data.streamInfo;
     acceptCallButton.disabled = false;
     denyCallButton.disabled = false;
+});
+
+socket.on('call info', (data) => {
+    peerConnection.setRemoteDescription(data.streamInfo);
+});
+
+socket.on('ice receive', (data) => {
+    if (Array.isArray(data.candidate)) {
+        data.candidate.forEach(candidate => {
+            peerConnection.addIceCandidate(new RTCIceCandidate(candidate));
+        });
+    } else {
+        peerConnection.addIceCandidate(new RTCIceCandidate(data.candidate));
+    }
+});
+
+socket.on('call denied', (data) => {
+    if (data.username == nameToCall.value) {
+        nameToCall.value = '';
+    }
+});
+
+socket.on('hangup', (data) => {
+    if (data.username == username.value)
+        hangupAction();
 });
 
 window.onbeforeunload = () => {

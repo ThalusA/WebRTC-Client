@@ -1,5 +1,5 @@
 {
-  "name": "WebRTC_Client",
+  "name": "webrtc-client",
   "version": "1.0.0",
   "main": "main.js",
   "license": "MIT",
