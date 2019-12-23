@@ -20,10 +20,10 @@ socket.on('call info', (data) => {
 socket.on('ice receive', (data) => {
     if (Array.isArray(data.candidate)) {
         data.candidate.forEach(candidate => {
-            peerConnection.addIceCandidate(new RTCIceCandidate(candidate));
+            peerConnection.addIceCandidate(new RTCIceCandidate({ candidate: candidate }));
         });
     } else {
-        peerConnection.addIceCandidate(new RTCIceCandidate(data.candidate));
+        peerConnection.addIceCandidate(new RTCIceCandidate({ candidate: data.candidate }));
     }
 });
 
