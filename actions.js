@@ -79,7 +79,7 @@ function stopAction() {
 }
 
 function acceptAction() {
-    socket.emit('call accept', { caller: callerName.value, responder: username.value });
+    socket.emit('call accept', { caller: callerName.value, responder: username.value, streamInfo: peerConnection.localDescription });
     callerName.value = '';
     acceptCallButton.disabled = true;
     denyCallButton.disabled = true;

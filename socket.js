@@ -14,6 +14,7 @@ socket.on('called', (data) => {
 });
 
 socket.on('call info', (data) => {
+    console.log(data);
     peerConnection.setRemoteDescription(data.streamInfo)
         .then(() => peerConnection.createAnswer(answerOptions))
         .then(peerConnection.setLocalDescription)
@@ -24,6 +25,7 @@ socket.on('call info', (data) => {
 });
 
 socket.on('call answer', (data) => {
+    console.log(data);
     peerConnection.setRemoteDescription(data.streamInfo);
     data.candidates.forEach((candidate) => {
         peerConnection.addIceCandidate(candidate);

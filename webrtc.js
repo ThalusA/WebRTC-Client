@@ -41,12 +41,7 @@ function setSessionDescriptionError(error) {
 function createdOffer(description) {
     trace(`Creating offer from peerConnection:\n${description.sdp}`);
     peerConnection.setLocalDescription(description)
-        .then(() => {
-            socket.emit('register', {
-                username: username.value,
-                streamInfo: peerConnection.localDescription 
-            });
-        })
+        .then(() => socket.emit('register', { username: username.value }))
         .catch(setSessionDescriptionError);
 }
 
