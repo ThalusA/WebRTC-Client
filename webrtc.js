@@ -26,9 +26,8 @@ function setupMediaDevice(mediaStream) {
 // Connects with new peer candidate.
 function handleConnection(desc) {
     if (desc && desc.candidate && desc.candidate.candidate) {
-        console.log(desc.candidate.candidate);
         trace(`ICE Canditate Update : ${desc.candidate.candidate}`);
-        socket.emit('ice update', { username: username.value , candidate: desc.candidate.candidate });
+        socket.emit('ice update', { username: username.value , candidate: desc.candidate.toJSON() });
     }
 }
 
