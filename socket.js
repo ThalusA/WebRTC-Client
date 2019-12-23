@@ -14,17 +14,15 @@ socket.on('called', (data) => {
 });
 
 socket.on('call info', (data) => {
+    console.log(data);
     peerConnection.setRemoteDescription(data.streamInfo);
+    for (let candidate in data.candidates) {
+        peerConnection.addIceCandidate(candidate);
+    }
 });
 
 socket.on('ice receive', (data) => {
-    if (Array.isArray(data.candidate)) {
-        data.candidate.forEach(candidate => {
-            peerConnection.addIceCandidate(candidate);
-        });
-    } else {
-        peerConnection.addIceCandidate(data.candidate);
-    }
+    peerConnection.addIceCandidate(data.candidate);
 });
 
 socket.on('call denied', (data) => {
