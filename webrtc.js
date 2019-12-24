@@ -64,8 +64,6 @@ function setSessionDescriptionError(error) {
 
 function beginNegotiation() {
     if (callerName.value && username.value) {
-        console.log(callerName.value);
-        console.log(username.value);
         peerConnection.createOffer(offerOptions)
             .then(offer => peerConnection.setLocalDescription(offer))
             .then(() => {

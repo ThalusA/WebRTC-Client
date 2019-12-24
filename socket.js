@@ -17,7 +17,7 @@ socket.on('call offer', (data) => {
     trace(`Receiving offer from peerConnection:\n${data.streamInfo.sdp}.`);
     peerConnection.setRemoteDescription(data.streamInfo)
         .then(() => peerConnection.createAnswer(answerOptions))
-        .then(peerConnection.setLocalDescription)
+        .then(answer => peerConnection.setLocalDescription(answer))
         .then(() => {
             socket.emit('call answer', { caller: username.value, responder: nameToCall.value, streamInfo: peerConnection.localDescription.toJSON() });
             data.candidates.forEach(candidate => peerConnection.addIceCandidate(candidate));
