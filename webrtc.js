@@ -79,6 +79,7 @@ function beginNegotiation() {
 function handleStream(event) {
     remoteVideo.srcObject = event.stream;
     remoteStream = event.stream;
+    remoteVideo.hidden = false;
 }
 
 function trace(text) {
