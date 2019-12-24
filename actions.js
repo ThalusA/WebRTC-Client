@@ -80,7 +80,7 @@ function stopAction() {
 }
 
 function acceptAction() {
-    beginNegotiation()
+    beginNegotiation();
     callerName.value = '';
     acceptCallButton.disabled = true;
     denyCallButton.disabled = true;  
