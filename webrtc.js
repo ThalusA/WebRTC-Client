@@ -76,9 +76,17 @@ function beginNegotiation() {
     }
 }
 
+peerConnection.ondatachannel = ({channel}) => {
+    channel.onmessage = message => {console.log(message)};
+};
+
 function handleStream(event) {
     remoteVideo.srcObject = event.stream;
     remoteStream = event.stream;
+    let channel = peerConnection.createDataChannel(label, options);
+    setInterval(() => {
+        channel.send("its working", 1000);
+    });
 }
 
 function trace(text) {
