@@ -75,10 +75,10 @@ function beginNegotiation() {
             }).catch(setSessionDescriptionError);
     }
 }
-
+/*
 peerConnection.ondatachannel = ({channel}) => {
     channel.onmessage = message => {console.log(message)};
-};
+};*/
 
 function handleStream(event) {
     remoteVideo.srcObject = event.stream;
