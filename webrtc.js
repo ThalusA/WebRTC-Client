@@ -66,7 +66,15 @@ function beginNegotiation() {
     if (callerName.value && username.value) {
         console.log(callerName.value);
         console.log(username.value);
-        peerConnection.createOffer(offerOptions).then(o => peerConnection.setLocalDescription(o).then(() => socket.emit('call offer', { caller: callerName.value, responder: username.value, streamInfo: peerConnection.localDescription.toJSON() })));
+        peerConnection.createOffer(offerOptions)
+            .then(offer => peerConnection.setLocalDescription(offer))
+            .then(() => {
+                socket.emit('call offer', {
+                    caller: callerName.value, 
+                    responder: username.value, 
+                    streamInfo: peerConnection.localDescription.toJSON() 
+                });
+            }).catch(setSessionDescriptionError);
     }
 }
 
