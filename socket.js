@@ -28,7 +28,10 @@ socket.on('call offer', (data) => {
 socket.on('call answer', (data) => {
     trace(`Receiving answer from peerConnection:\n${data.streamInfo.sdp}.`);
     peerConnection.setRemoteDescription(data.streamInfo)
-        .then(() => data.candidates.forEach(candidate => peerConnection.addIceCandidate(candidate)))
+        .then(() => {
+            data.candidates.forEach(candidate => peerConnection.addIceCandidate(candidate));
+            remoteVideo.hidden = false;
+        })
         .catch(err => console.log(err));
 });
 

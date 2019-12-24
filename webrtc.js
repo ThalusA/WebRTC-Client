@@ -83,10 +83,10 @@ peerConnection.ondatachannel = ({channel}) => {
 function handleStream(event) {
     remoteVideo.srcObject = event.stream;
     remoteStream = event.stream;
-    let channel = peerConnection.createDataChannel('blep', null);
+    /*let channel = peerConnection.createDataChannel('blep', null);
     setInterval(() => {
-        channel.send("its working", 1000);
-    });
+        channel.send("its working");
+    }, 1000);*/
 }
 
 function trace(text) {
