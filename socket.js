@@ -13,9 +13,9 @@ socket.on('called', (data) => {
     denyCallButton.disabled = false;
 });
 
-socket.on('call info', (data) => {
-    console.log(data);
-    peerConnection.setRemoteDescription(data.streamInfo) // WHERE IT CRASH
+socket.on('call offer', (data) => {
+    trace(`Receiving offer from peerConnection:\n${data.streamInfo.sdp}.`);
+    peerConnection.setRemoteDescription(data.streamInfo)
         .then(() => peerConnection.createAnswer(answerOptions))
         .then(peerConnection.setLocalDescription)
         .then(() => {
@@ -26,11 +26,10 @@ socket.on('call info', (data) => {
 });
 
 socket.on('call answer', (data) => {
-    console.log(data);
+    trace(`Receiving answer from peerConnection:\n${data.streamInfo.sdp}.`);
     peerConnection.setRemoteDescription(data.streamInfo)
         .then(() => data.candidates.forEach(candidate => peerConnection.addIceCandidate(candidate)))
         .catch(err => console.log(err));
-
 });
 
 socket.on('ice receive', (data) => {

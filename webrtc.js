@@ -46,7 +46,7 @@ function handleNegotiation() {
 }
 
 function handleSignalingState() {
-    trace(peerConnection.signalingState);
+    trace('New Signaling State : ' + peerConnection.signalingState);
 }
 
 // Connects with new peer candidate.
@@ -62,24 +62,18 @@ function setSessionDescriptionError(error) {
     trace(`Failed to create session description: ${error.toString()}.`);
 }
 
-// Logs offer creation and sets peer connection session descriptions.
-function createdOffer(description) {
-    trace(`Creating offer from peerConnection:\n${description.sdp}`);
-    peerConnection.setLocalDescription(description)
-        .then(() => socket.emit('register', { username: username.value }))
-        .catch(setSessionDescriptionError);
+function beginNegotiation() {
+    peerConnection.createOffer(offerOptions)
+        .then(peerConnection.setLocalDescription)
+        .then(() => {
+            if (callerName.value && username.value)
+                socket.emit('call offer', { caller: callerName.value, responder: username.value, streamInfo: peerConnection.localDescription.toJSON() });
+        }).catch(setSessionDescriptionError);
 }
 
 function handleStream(event) {
     remoteVideo.srcObject = event.stream;
     remoteStream = event.stream;
-}
-
-// Logs answer to offer creation and sets peer connection session descriptions.
-function getAnswer(description) {
-    trace(`Receiving answer from peerConnection:\n${description.sdp}.`);
-    peerConnection.setRemoteDescription(description)
-        .catch(setSessionDescriptionError);
 }
 
 function trace(text) {

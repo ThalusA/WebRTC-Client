@@ -32,15 +32,14 @@ function startAction() {
         peerConnection.onnegotiationneeded = handleNegotiation;
         peerConnection.onaddstream = handleStream;
         peerConnection.onicecandidate = handleConnection;
+        peerConnection.onnegotiationneeded = beginNegotiation;
         setupStates(true, false, false, true, false, true);
         localVideo.hidden = false;
         const videoDevice = mediaStream.getVideoTracks()[0];
         const audioDevice = mediaStream.getAudioTracks()[0];
         if (videoDevice) trace(`Using video device: ${videoDevice.label}.`);
         if (audioDevice) trace(`Using audio device: ${audioDevice.label}.`);
-        peerConnection.createOffer(offerOptions)
-            .then(createdOffer)
-            .catch(setSessionDescriptionError);
+        socket.emit('register', { username: username.value });
     }, (error) => {
         trace(`navigator.getUserMedia error: ${error.toString()}.`);
     });
@@ -81,10 +80,10 @@ function stopAction() {
 }
 
 function acceptAction() {
-    socket.emit('call accept', { caller: callerName.value, responder: username.value, streamInfo: peerConnection.localDescription.toJSON() });
+    beginNegotiation()
     callerName.value = '';
     acceptCallButton.disabled = true;
-    denyCallButton.disabled = true;
+    denyCallButton.disabled = true;  
 }
 
 function denyAction() {
